@@ -5,9 +5,15 @@
 目前eino提供了快捷接入大模型的方法但是聊天历史记录的功能没有提供，导致没法进行对轮对话，及对话管理
 
 ## 怎么接入
+可以参照 [example](./example)
 1. 安装依赖 `go get github.com/wangle201210/chat-history` 
 
-2. 在原来获取messages的地方添加 add start -- add end 之间的代码 
+2. 初始化 EinoHistory
+```go
+var eh = eino.NewEinoHistory("root:123456@tcp(127.0.0.1:3306)/chat_history")
+```
+
+3. 在原来获取messages的地方添加 add start -- add end 之间的代码 
 ```go
 func createMessagesFromTemplate(ctx context.Context, convID, question string) (messages []*schema.Message, err error) {
 	template := createTemplate(ctx)
@@ -38,7 +44,7 @@ func createMessagesFromTemplate(ctx context.Context, convID, question string) (m
 	return
 }
 ```
-3. 在返回消息的地方添加 add start -- add end 之间的代码 
+4. 在返回消息的地方添加 add start -- add end 之间的代码 
 ```go
     messages, err := createMessagesFromTemplate(ctx, convID, s)
     if err != nil {
