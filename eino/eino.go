@@ -11,6 +11,10 @@ type History struct {
 	cr *repositories.ConversationRepository
 }
 
+// NewEinoHistory 使用 DSN 创建 History 实例
+// DSN 格式：
+// - MySQL: user:pass@tcp(host:port)/dbname?charset=utf8mb4&parseTime=True&loc=Local
+// - SQLite: /path/to/file.db 或 /path/to/file.db?_journal_mode=WAL
 func NewEinoHistory(dsn string) *History {
 	if err := repositories.InitDB(dsn); err != nil {
 		panic(err)
