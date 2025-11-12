@@ -27,12 +27,12 @@ type Message struct {
 	MsgID          string          `gorm:"uniqueIndex;column:msg_id;type:varchar(255)"`
 	ConversationID string          `gorm:"column:conversation_id;type:varchar(255)"`
 	ParentID       string          `gorm:"column:parent_id;type:varchar(255);default:''"`
-	Role           string          `gorm:"column:role;type:enum('user','assistant','system','function')"`
+	Role           string          `gorm:"column:role;type:varchar(50);default:'user'"`
 	Content        string          `gorm:"column:content;type:text"`
 	CreatedAt      int64           `gorm:"column:created_at"`
 	OrderSeq       int             `gorm:"column:order_seq;default:0"`
 	TokenCount     int             `gorm:"column:token_count;default:0"`
-	Status         string          `gorm:"column:status;type:enum('sent','pending','error');default:'sent'"`
+	Status         string          `gorm:"column:status;type:varchar(20);default:'sent'"`
 	Metadata       json.RawMessage `gorm:"column:metadata;type:json"`
 	IsContextEdge  bool            `gorm:"column:is_context_edge;default:0"`
 	IsVariant      bool            `gorm:"column:is_variant;default:0"`
@@ -48,10 +48,10 @@ type Attachment struct {
 	ID             uint64 `gorm:"primaryKey;column:id"`
 	AttachID       string `gorm:"uniqueIndex;column:attach_id;type:varchar(255)"`
 	MessageID      string `gorm:"column:message_id;type:varchar(255)"`
-	AttachmentType string `gorm:"column:attachment_type;type:enum('file','image','code','audio','video')"`
+	AttachmentType string `gorm:"column:attachment_type;type:varchar(20)"`
 	FileName       string `gorm:"column:file_name;type:varchar(255)"`
 	FileSize       int64  `gorm:"column:file_size"`
-	StorageType    string `gorm:"column:storage_type;type:enum('path','blob','cloud')"`
+	StorageType    string `gorm:"column:storage_type;type:varchar(20)"`
 	StoragePath    string `gorm:"column:storage_path;type:varchar(1024)"`
 	Thumbnail      []byte `gorm:"column:thumbnail;type:mediumblob"`
 	Vectorized     bool   `gorm:"column:vectorized;default:0"`
